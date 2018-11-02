@@ -1,0 +1,110 @@
+.text-red {
+    font-style:bold;
+    color:red;
+}
+header{
+    padding:10px;
+    overflow:hidden;
+}
+header h1{
+    display:block;
+    width:150px;
+    margin:0;
+    float:left;
+}
+#publicheader{
+    float:right;
+    padding:10px
+}
+#main{
+  background: #eeeeee;
+}
+div.container{
+  width:60%;
+  margin:0 20% 0;
+  padding:20px 0 20px;
+}
+div#main_pr img{
+  width: 100%;
+}
+section#novel_content{
+
+}
+ul.novel_list,ul.img_list,ul.comic_list{
+  display:flex;
+  flex-wrap: wrap;
+  padding:0;
+}
+ul.novel_list li{
+  width:250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: solid 1px green;
+  margin:0 0 30px 20px;
+}
+ul.comic_list li{
+  width:120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: solid 1px green;
+  margin:0 0 30px 20px;
+}
+ul.img_list li{
+  width:250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: solid 1px #dedede;
+  margin:0 0 30px 20px;
+}
+ul.novel_list img{
+  width:80px;
+  height:80px;
+  float: right;
+}
+ul.comic_list img{
+  width:100px;
+  height:100px;
+}
+ul.novel_list h3{
+  display:inline-block;
+}
+ul.img_list img{
+  width:100%;
+
+}
+@media screen and (max-width: 768px){
+  div.container{
+    width:90%;
+    margin:0 5% 0;
+    padding:20px 0 20px;
+  }
+  ul.novel_list li,ul.img_list li{
+    width:90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: solid 1px green;
+    margin:0 0 30px 20px;
+  }
+  ul.novel_list li{
+    width:90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: solid 1px green;
+    margin:0 0 30px 20px;
+  }
+  ul.img_list li{
+    width:145px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: solid 1px #dedede;
+    margin:0 0 30px 20px;
+  }
+}
+
+
