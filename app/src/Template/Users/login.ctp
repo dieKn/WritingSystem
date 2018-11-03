@@ -7,6 +7,6 @@
 <?= $this->Form->control('password') ?>
 </fieldset>
 
-<?= $this->Form->button(_('submit')) ?>
+<?= $this->Form->button(_('ログイン')) ?>
 <?= $this->Form->end() ?>
 </div>

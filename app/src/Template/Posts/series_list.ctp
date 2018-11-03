@@ -8,9 +8,15 @@ foreach($posts as $post):
 <h3>シリーズ編集ページ</h3>
 <?=$this->Form->create('Series', ['type' => 'post', 'url' => ['controller' => 'Posts', 'action' => 'seriesSave']])?>
 <?=$this->Form->control('title', ['label' => 'タイトル', 'value' => $post->title]);?>
-<?=$this->Form->control('description', ['label' => '説明文', 'value' => $post->description]);?>
-<?=$this->Form->control('post_type', ['label' => 'シリーズジャンル', 'value' => $post->post_type]);?>
+<?=$this->Form->control('description', ['type' => 'textarea', 'rows' => '10', 'cols' => '10', 'label' => 'あらすじ','value' => $post->description]);?>
+<?=$this->Form->control('catch_copy', ['label' => 'キャッチコピー', 'value' => $post->catch_copy]);?>
 <?=$this->Form->control('genre', ['label' => 'シリーズジャンル', 'value' => $post->genre]);?>
+<?=$this->Form->label('ステータス'); ?>
+<?=$this->Form->select('content_status', ['public' => '公開', 'private' => '非公開'], ['default' => $post->content_status]);?>
+<?=$this->Form->label('執筆状況'); ?>
+<?=$this->Form->select('writing_status', ['continue' => '執筆中', 'finish' => '完結済'], ['default' => $post->writing_status]);?>
+<?=$this->Form->label('短編/長編'); ?>
+<?=$this->Form->select('series_type', ['short' => '短編', 'long' => '長編'], ['default' => $post->series_type]);?>
 <?=$this->Form->hidden('user_id',['value' => $post->user_id]);?>
 <?=$this->Form->hidden('series_id',['value' => $post->series_id]);?>
 <?=$this->Form->submit('シリーズ内容を更新する')?>

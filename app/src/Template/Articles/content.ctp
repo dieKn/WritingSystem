@@ -27,7 +27,7 @@ foreach($story as $story_list):
 $i++;
 ?>
 <li>
-<a href="http://www.c-oasis.jp/app/articles/page/<?php echo $post_id."/".$story_list->story_id; ?>">
+<a href="http://www.c-oasis.jp/app/articles/page/<?php echo $post_id."/?page=".$i; ?>">
 <h3>第<?php echo $i; ?>話：<?php echo h($story_list->story_title); ?></h3>
 </a>
 </li>

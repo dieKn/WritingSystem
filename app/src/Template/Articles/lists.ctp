@@ -18,14 +18,14 @@ foreach($posts as $post):
   <br><br>
 <a href="content/<?php echo h($post->series_id);?>/<?php echo h($post->article_id); ?>">
 <?php
-        echo h($post->description);
+        echo h($post->catch_copy);
 ?>
 </a>
 <div>作者：<?php echo h($post->user['username']);?></div>
 </li>
 <?php
 endforeach;
-//var_dump($posts);
+var_dump($test);
 ?>
 </ul>
 </section>
