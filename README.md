@@ -1,2 +1,1 @@
-Writing_System開発用のリポジトリです
-pushテスト
+master branch push6
