@@ -27,4 +27,16 @@ endforeach;
             <?=$this->Paginator->last(' last >> ') ?>            
         </ul>
     </div>
+    <div>
+    <h3>関連作品</h3>
+        <ul class="relation_list">
+            <?php 
+                foreach($relation_series as $relation):
+                    echo "<li><a href=\"".$url."articles/content/".$relation->series_id."\">";
+                    echo $relation->title;
+                    echo "</a></li>";
+                endforeach;
+            ?>
+        </ul>
+    </div>
 </div>

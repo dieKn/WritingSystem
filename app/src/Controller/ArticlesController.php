@@ -72,7 +72,20 @@ class ArticlesController extends AppController
 	$this->set(compact('story'));
 	$this->set(compact('post_id'));
 	$this->set(compact('story_id'));
+
+	$genre = $this->Series->get($post_id)->genre;
+	$relation_series = $this->getRelation($genre);
+	$this->set(compact('relation_series'));
+
 	$url = Router::url('/', true); 
 	$this->set(compact('url'));
-    }
+	}
+	
+	function getRelation($genre){
+		$posts = $this->Series->find()
+		->where(['genre' => $genre, 'content_status' => 'public'])
+		->contain(['Users'])
+		->limit(5);
+		return $posts;
+	}
 }
