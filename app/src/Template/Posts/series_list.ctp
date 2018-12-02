@@ -35,7 +35,7 @@ endforeach;
 <?php
 foreach($story_list as $story):
 ?>
-<a href="http://www.c-oasis.jp/app/posts/story_single/<?php echo $post_id."/".h($story->story_id);?>">
+<a href="<?php print $url; ?>posts/story_single/<?php echo $post_id."/".h($story->story_id);?>">
 <li>
 <p>タイトル：<?php echo h($story->story_title); ?></p>
 </li>
