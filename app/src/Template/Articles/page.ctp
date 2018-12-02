@@ -7,7 +7,6 @@
 
 $i = 0;
 foreach($story as $story_list):
-
 $i++;
 ?>
 <li>

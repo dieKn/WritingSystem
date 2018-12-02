@@ -20,7 +20,6 @@ use App\Controller\PostsController;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
-
 class ArticlesController extends AppController
 {
 
