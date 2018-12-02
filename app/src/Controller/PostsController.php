@@ -17,6 +17,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Controller\UsersController;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 class PostsController extends AppController
 {
@@ -37,6 +38,9 @@ class PostsController extends AppController
         $user = $this->Auth->user('id');
         $this->set('user_id', $user);
         $this->set(compact('post_id'));
+
+        $url = Router::url('/', true); 
+        $this->set(compact('url'));
     }
     //投稿ページ用の関数
     public function seriesAdd()
@@ -46,6 +50,9 @@ class PostsController extends AppController
         $this->set('teststr', $posts);
         $user = $this->Auth->user('id');
         $this->set('user_id', $user);
+
+        $url = Router::url('/', true); 
+        $this->set(compact('url'));
     }
     public function save()
     {
@@ -105,6 +112,8 @@ class PostsController extends AppController
     public function seriesList($post_id){ //ユーザのアクセス権限にバグあり
         $series = TableRegistry::getTableLocator()->get('series');
         $stories = TableRegistry::getTableLocator()->get('stories');
+        $url = Router::url('/', true); 
+        $this->set(compact('url'));
         $posts = $series->find()
         ->where(['series_id' => $post_id])
         ->contain(['Users']);
@@ -119,6 +128,8 @@ class PostsController extends AppController
     //自分の投稿の一覧を取得する関数
     public function storySingle($series_id,$story_id){ //ユーザのアクセス権限にバグあり
         $story = TableRegistry::getTableLocator()->get('stories');
+        $url = Router::url('/', true); 
+        $this->set(compact('url'));
         $posts = $story->find()
         ->where(['story_id' => $story_id]) 
         ->contain(['Users','Series']) ;
