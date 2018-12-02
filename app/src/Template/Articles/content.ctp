@@ -1,5 +1,5 @@
 <div>
-<a href="../../lists">トップページへ</a>
+<a href="<?php print $url; ?>articles/lists">トップページへ</a>
 </div>
 <div>
 <ul>
