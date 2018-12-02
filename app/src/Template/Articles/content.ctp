@@ -17,7 +17,7 @@ foreach($posts as $post):
 </li>
 <?php
 endforeach;
-//var_dump($post,$author);
+// var_dump($story->story_title);
 ?>
 </ul>
 <ul>

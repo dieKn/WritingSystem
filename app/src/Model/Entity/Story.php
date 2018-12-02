@@ -7,5 +7,9 @@ class Story extends Entity {
   protected $_accessible = [
     '*' => true
   ];
+  protected function _getStoryTitle($title)
+    {
+        return ucwords($title);
+    }
 }
 
