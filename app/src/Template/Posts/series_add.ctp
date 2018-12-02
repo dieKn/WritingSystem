@@ -1,5 +1,5 @@
 <div>
-    <div><a href="http://www.c-oasis.jp/app/users/mypage">MyPageへ</a></div>
+    <div><a href="<?php print $url; ?>/users/mypage">MyPageへ</a></div>
 </div>
 <div>
 <?=$this->Form->create('Series', ['type' => 'post', 'url' => ['controller' => 'Posts', 'action' => 'seriesSave']])?>

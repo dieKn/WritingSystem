@@ -59,6 +59,8 @@ class ArticlesController extends AppController
 	$story = $this->Stories->find()
 	->where(['series_id' => $post_id, 'content_status' => 'public']);
 	$this->set(compact('story'));
+	$url = Router::url('/', true); 
+	$this->set(compact('url'));
 	}
 	
 	public function page($post_id, $story_id=null)
@@ -70,5 +72,7 @@ class ArticlesController extends AppController
 	$this->set(compact('story'));
 	$this->set(compact('post_id'));
 	$this->set(compact('story_id'));
+	$url = Router::url('/', true); 
+	$this->set(compact('url'));
     }
 }

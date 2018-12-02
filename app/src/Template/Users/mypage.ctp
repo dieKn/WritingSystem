@@ -4,7 +4,7 @@
 <?php 
     $i= 1;
     foreach($posts as $post){ ?>
-    <a href="http://www.c-oasis.jp/app/posts/series_list/<?php echo h($post->series_id);?>">
+    <a href="<?php print $url; ?>posts/series_list/<?php echo h($post->series_id);?>">
 <?php    
     echo $i."：";
     echo h($post->title);

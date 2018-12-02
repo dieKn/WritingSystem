@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 /**
  * Users Controller
@@ -133,6 +134,8 @@ class UsersController extends AppController
         $posts = $postData->findByUser_id($this->Auth->user('id'))
         ->contain(['Users']);
         $this->set(compact('posts'));
+        $url = Router::url('/', true); 
+        $this->set(compact('url'));
         
     }
 

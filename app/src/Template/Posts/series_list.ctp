@@ -1,5 +1,5 @@
 <div>
-<a href="http://www.c-oasis.jp/app/users/mypage">トップページへ</a>
+<a href="<?php print $url; ?>/users/mypage">トップページへ</a>
 </div>
 <div>
 <?php
