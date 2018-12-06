@@ -37,6 +37,9 @@ class ArticlesController extends AppController
 	$this->Series = TableRegistry::get('series');
 	$this->Stories = TableRegistry::get('stories');
 	$this->Users = TableRegistry::get('users');
+	$this->Viewers = TableRegistry::get('viewers');
+	$url = Router::url('/', true); 
+	$this->set(compact('url'));
     }
     public function lists()
     {
@@ -59,8 +62,7 @@ class ArticlesController extends AppController
 	$story = $this->Stories->find()
 	->where(['series_id' => $post_id, 'content_status' => 'public']);
 	$this->set(compact('story'));
-	$url = Router::url('/', true); 
-	$this->set(compact('url'));
+	$this->viewCounter(null, $post_id);
 	}
 	
 	public function page($post_id, $story_id=null)
@@ -76,9 +78,7 @@ class ArticlesController extends AppController
 	$genre = $this->Series->get($post_id)->genre;
 	$relation_series = $this->getRelation($genre);
 	$this->set(compact('relation_series'));
-
-	$url = Router::url('/', true); 
-	$this->set(compact('url'));
+	$this->viewCounter($story_id, $post_id);	
 	}
 	
 	function getRelation($genre){
@@ -87,5 +87,19 @@ class ArticlesController extends AppController
 		->contain(['Users'])
 		->limit(5);
 		return $posts;
+	}
+
+	function viewCounter($story_id=null, $series_id=null){
+		$getView = $this->Viewers->exists(['OR' => ['series_id' => $series_id, 'story_id' => $story_id]]);
+		if($getView){ //すでに閲覧されているか判定
+			$post = $this->Viewers->find()
+					->where(['OR' => ['series_id' => $series_id, 'story_id' => $story_id]])
+					->first();
+			$post->view_count = $post->view_count + 1;
+		} else{
+			$post = $this->Viewers->newEntity();
+			$post = $this->Viewers->patchEntity($post,['series_id' => $series_id, 'story_id' => $story_id, "view_count" => 1]);
+		}
+		$test = $this->Viewers->save($post);
 	}
 }
