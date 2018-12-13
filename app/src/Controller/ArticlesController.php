@@ -75,6 +75,8 @@ class ArticlesController extends AppController
 	$this->set(compact('post_id'));
 	$this->set(compact('story_id'));
 
+	$ranking_series = $this->getRanking();
+	$this->set(compact('ranking_series'));
 	$genre = $this->Series->get($post_id)->genre;
 	$relation_series = $this->getRelation($genre);
 	$this->set(compact('relation_series'));
@@ -87,6 +89,14 @@ class ArticlesController extends AppController
 		->contain(['Users'])
 		->limit(5);
 		return $posts;
+	}
+
+	function getRanking(){
+		$rank = $this->Viewers->find()
+		->contain(['Series'])
+		->limit(5)
+		->order(['view_count' => 'DESC']);
+		return $rank;
 	}
 
 	function viewCounter($story_id=null, $series_id=null){
