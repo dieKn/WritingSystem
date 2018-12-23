@@ -39,4 +39,19 @@ endforeach;
             ?>
         </ul>
     </div>
+    <div>
+    <h3>ランキング</h3>
+        <ul class="ranking_list">
+            <?php 
+                $i = 1;
+                foreach($ranking_series as $ranking):
+                    echo "<li><a href=\"".$url."articles/content/".$ranking->series_id."\">";
+                    echo "第".$i."位：";
+                    echo $ranking->series['title'];
+                    echo "</a></li>";
+                    $i++;
+                endforeach;
+            ?>
+        </ul>
+    </div>
 </div>
