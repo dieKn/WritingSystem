@@ -25,7 +25,6 @@ foreach($posts as $post):
 </li>
 <?php
 endforeach;
-var_dump($test);
 ?>
 </ul>
 </section>
@@ -44,11 +43,18 @@ var_dump($test);
 <section id="novel_content"class="py-5">
 <h2 class="text-left mb-5">イラスト</h2>
 <ul class="img_list">
-<?php for($i = 0; $i < 6; $i++){ ?>
+<?php
+foreach($illusts_posts as $illust_post):
+?>
+
   <li>
-  <h3>test2</h3>
-  <img src="https://iwiz-chie.c.yimg.jp/im_siggqr6W3d_dLCyrs0XAOWje7A---x320-y320-exp5m-n1/d/iwiz-chie/que-13128029003">
-  </li> <?php } ?>
+  <h3><?php echo h($illust_post->illust_title); ?></h3>
+  <div>作者：<?php echo h($illust_post->user['username']);?></div>
+  <img src="<?php echo h($url.$illust_post->illust_url); ?>">
+  </li>
+  <?php
+endforeach;
+?>
 </ul>
 </section>
 <hr>
