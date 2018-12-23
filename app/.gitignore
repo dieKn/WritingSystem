@@ -5,6 +5,7 @@
 /config/.env
 /logs/*
 /tmp/*
+/webroot/img/illust_img/*
 /vendor/*
 
 # OS generated files #
