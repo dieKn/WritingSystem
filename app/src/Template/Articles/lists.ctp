@@ -48,9 +48,11 @@ foreach($illusts_posts as $illust_post):
 ?>
 
   <li>
+<a href="<?php echo $url.'illusts/content/'.h($illust_post->illust_id);?>">
   <h3><?php echo h($illust_post->illust_title); ?></h3>
   <div>作者：<?php echo h($illust_post->user['username']);?></div>
   <img src="<?php echo h($url.$illust_post->illust_url); ?>">
+</a>
   </li>
   <?php
 endforeach;
