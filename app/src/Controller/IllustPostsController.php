@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Controller\UsersController;
+use App\Controller\IllustsController;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Filesystem\Folder;
@@ -33,7 +34,7 @@ class IllustPostsController extends AppController
         $this->set(compact('url'));
     }
 
-    //イラスト新規追加
+    //イラスト新規追加ページ
     public function illustAdd()
     {
         $user = $this->Auth->user('id');
@@ -47,6 +48,7 @@ class IllustPostsController extends AppController
     $post = $illusts->newEntity();
         if($this->request->is('post')){
             $this->illustUpload();
+            $this->illustFtp();
             $post = $illusts->patchEntity($post,$this->request->getData());
             $illusts->save($post); 
             return $this->redirect('/Users/mypage');
@@ -55,13 +57,52 @@ class IllustPostsController extends AppController
 
     //画像アップロード処理
     function illustUpload(){
-        $fileName = $this->request->getData('file');
         //ファイルアップロード
-        move_uploaded_file($fileName['tmp_name'], WWW_ROOT.'/img/illust_img/'.$fileName['name']);
+        $count = new IllustsController();
+        //URLに複合主キーを入れる
+        $user_id = $this->request->getData('user_id');
+        $urlGenerate = $user_id.'_'.$count->contentCounter($user_id).'_';
+        $fileName = $this->request->getData('file');
+        move_uploaded_file( //TODO: ここの処理をFTPあたりに変換して別途ストレージサーバを立てそこに保管する
+            $fileName['tmp_name'], 
+            TMP."img/".$urlGenerate.$fileName['name']
+        );
         
         //DB保存用のURL
-        $imgUrl = 'img/illust_img/'.$fileName['name'];
+        $imgUrl = 'img/illust_img/'.$urlGenerate.$fileName['name'];
         $this->request = $this->request->withData('illust_url', $imgUrl);
         return $this->request;
+    }
+
+    function illustFtp(){
+        $count = new IllustsController();
+        $user_id = $this->request->getData('user_id');
+        $urlGenerate = $user_id.'_'.$count->contentCounter($user_id).'_';
+        $fileName = $this->request->getData('file');
+        
+        //接続情報
+        $ftp_server = "118.27.35.204";
+        $ftp_user = "oasis-admin2";
+        $ftp_pass = "oasisproject";
+        $local_img = TMP."img/".$urlGenerate.$fileName['name'];
+        $remote_img = $urlGenerate.$fileName['name'];
+
+
+	// 接続を確立する。接続に失敗したら終了する。
+        $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server");
+	// ログインを試みる
+	ftp_pasv($conn_id, true);
+        if (@ftp_login($conn_id, $ftp_user, $ftp_pass)) {
+            echo "Connected as $ftp_user@$ftp_server\n";
+            ftp_put($conn_id, $remote_img, $local_img, FTP_BINARY, false);
+            if(file_exists($local_img)){ // 画像を削除する
+                unlink($local_img);
+            }
+        } else {
+            echo "Couldn't connect as $ftp_user\n";
+        }
+
+        // 接続を閉じる
+        ftp_close($conn_id);
     }
 }

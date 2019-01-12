@@ -43,4 +43,13 @@ class IllustsController extends AppController
 	$this->set(compact('post_id'));
 	$this->set(compact('story'));
 	}
+
+	public function contentCounter($user_id){
+		$count = $this->Illusts->find()->where(['user_id' => $user_id])->count();
+		return $count;
+	}
+	public function contentHistoryCounter($user_id){
+		$count = $this->Illusts->find()->where(['user_id' => $user_id])->count();
+		return $count;
+	}
 }
