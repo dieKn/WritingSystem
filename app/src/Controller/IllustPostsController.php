@@ -83,7 +83,6 @@ class IllustPostsController extends AppController
 	$fileName = $this->request->getData('file');
         $local_img = TMP."img/".$urlGenerate.$fileName['name'];
         $remote_img = "illust_img/".$urlGenerate.$fileName['name'];
-	var_dump($remote_img);
 	$sftp = new SFTP(SFTP_SERVER, 122);
 	$sftp->login(SFTP_USER, SFTP_PASSWORD);
 	
