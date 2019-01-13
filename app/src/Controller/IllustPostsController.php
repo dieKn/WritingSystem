@@ -98,9 +98,9 @@ class IllustPostsController extends AppController
         $fileName = $this->request->getData('file');
         
         //接続情報
-        $ftp_server = "118.27.35.204";
-        $ftp_user = "oasis-admin2";
-        $ftp_pass = "oasisproject";
+        $ftp_server = SFTP_SERVER;
+        $ftp_user = SFTP_USER;
+        $ftp_pass = SFTP_PASSWORD;
         $local_img = TMP."img/".$urlGenerate.$fileName['name'];
         $remote_img = $urlGenerate.$fileName['name'];
 
