@@ -22,6 +22,8 @@ use Cake\Routing\Router;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use RuntimeException;
+require "vendor/autoload.php";
+use phpseclib\Net\SFTP;
 
 class IllustPostsController extends AppController
 {
@@ -48,7 +50,7 @@ class IllustPostsController extends AppController
     $post = $illusts->newEntity();
         if($this->request->is('post')){
             $this->illustUpload();
-            $this->illustFtp();
+            $this->illustSftp();
             $post = $illusts->patchEntity($post,$this->request->getData());
             $illusts->save($post); 
             return $this->redirect('/Users/mypage');
@@ -74,7 +76,22 @@ class IllustPostsController extends AppController
         return $this->request;
     }
 
+    function illustSftp(){
+	$count = new IllustsController();
+        $user_id = $this->request->getData('user_id');
+        $urlGenerate = $user_id.'_'.$count->contentCounter($user_id).'_';
+	$fileName = $this->request->getData('file');
+        $local_img = TMP."img/".$urlGenerate.$fileName['name'];
+        $remote_img = "upload/".$urlGenerate.$fileName['name'];
+	var_dump($remote_img);
+	$sftp = new SFTP(SFTP_SERVER, 122);
+	$sftp->login(SFTP_USER, SFTP_PASSWORD);
+	
+	$sftp->put($remote_img, $local_img, SFTP::SOURCE_LOCAL_FILE);
+    }
+
     function illustFtp(){
+	//TODO: SFTPに置き換えたため今後不要
         $count = new IllustsController();
         $user_id = $this->request->getData('user_id');
         $urlGenerate = $user_id.'_'.$count->contentCounter($user_id).'_';

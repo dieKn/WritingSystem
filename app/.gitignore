@@ -2,6 +2,7 @@
 ##########################
 /config/app.php
 /config/app.default.php
+/config/passwrd.php
 /config/.env
 /logs/*
 /tmp/*
