@@ -2,9 +2,11 @@
 ##########################
 /config/app.php
 /config/app.default.php
+/config/passwrd.php
 /config/.env
 /logs/*
 /tmp/*
+/webroot/img/illust_img/*
 /vendor/*
 
 # OS generated files #

@@ -10,5 +10,7 @@
     echo h($post->title);
     echo "<br>";
     $i++;
-} ?>
+    } ?>
+<h3>イラストを投稿する</h3>
+<div><?= $this->Html->link(__('新しいイラストを投稿する'), '/IllustPosts/illust_add') ?></div>
 <div><?= $this->Html->link(__('ログアウト'), ['action' => 'logout']) ?></div>

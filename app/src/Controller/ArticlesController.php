@@ -43,11 +43,18 @@ class ArticlesController extends AppController
     }
     public function lists()
     {
-	// $postObject = new PostsController();
+	$this->Illusts = TableRegistry::get('illusts');
 	$posts = $this->Series->find()
 	->where(['content_status' => 'public'])
 	->contain(['Users']);
 	$this->set(compact('posts'));
+	
+	//一覧ページのイラスト
+	$illusts_posts = $this->Illusts->find()
+	->where(['content_status' => 'public'])
+	->contain(['Users']);
+	$this->set(compact('illusts_posts'));
+
 	$test = Router::url('/', true); 
 	$this->set(compact('test'));
 	}
