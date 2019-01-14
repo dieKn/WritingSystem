@@ -72,7 +72,7 @@ class IllustPostsController extends AppController
         );
         
         //DB保存用のURL
-        $imgUrl = 'illust_img/'.$urlGenerate.$fileName['name'];
+        $imgUrl = 'img_illust/'.$urlGenerate.$fileName['name'];
         $this->request = $this->request->withData('illust_url', $imgUrl);
         return $this->request;
     }
@@ -82,7 +82,7 @@ class IllustPostsController extends AppController
         $urlGenerate = $user_id.'_'.$this->getAchievementNum($user_id).'_';
 	    $fileName = $this->request->getData('file');
         $local_img = TMP."img/".$urlGenerate.$fileName['name'];
-        $remote_img = "illust_img/".$urlGenerate.$fileName['name'];
+        $remote_img = "img_illust/".$urlGenerate.$fileName['name'];
 	    $sftp = new SFTP(SFTP_SERVER, 122);
 	    $sftp->login(SFTP_USER, SFTP_PASSWORD);
 	
