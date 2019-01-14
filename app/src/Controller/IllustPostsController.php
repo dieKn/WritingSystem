@@ -62,7 +62,6 @@ class IllustPostsController extends AppController
     //画像アップロード処理
     function illustUpload(){
         //ファイルアップロード
-        // $count = new IllustsController();
         //URLに複合主キーを入れる
         $user_id = $this->request->getData('user_id');
         $urlGenerate = $user_id.'_'.$this->getAchievementNum($user_id).'_';

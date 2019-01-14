@@ -45,6 +45,7 @@ class IllustsController extends AppController
 	$this->set('test', 'http://www.c-oasis.jp:8084/');
 	}
 
+    //不要な関数
 	public function contentCounter($user_id){
 		$count = $this->Illusts->find()->where(['user_id' => $user_id])->count();
 		return $count;
