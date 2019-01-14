@@ -34,6 +34,7 @@ class IllustPostsController extends AppController
         parent::initialize();
         $url = Router::url('/', true); 
         $this->set(compact('url'));
+        $this->Achievements = TableRegistry::get('achievements');
     }
 
     //イラスト新規追加ページ
@@ -49,10 +50,11 @@ class IllustPostsController extends AppController
     $illusts = TableRegistry::getTableLocator()->get('illusts');
     $post = $illusts->newEntity();
         if($this->request->is('post')){
+            $this->illustAchieveUpdate($this->request->getData('user_id'));
             $this->illustUpload();
             $this->illustSftp();
             $post = $illusts->patchEntity($post,$this->request->getData());
-            $illusts->save($post); 
+            $illusts->save($post);
             return $this->redirect('/Users/mypage');
         }
     }
@@ -60,10 +62,9 @@ class IllustPostsController extends AppController
     //画像アップロード処理
     function illustUpload(){
         //ファイルアップロード
-        $count = new IllustsController();
         //URLに複合主キーを入れる
         $user_id = $this->request->getData('user_id');
-        $urlGenerate = $user_id.'_'.$count->contentCounter($user_id).'_';
+        $urlGenerate = $user_id.'_'.$this->getAchievementNum($user_id).'_';
         $fileName = $this->request->getData('file');
         move_uploaded_file( //TODO: ここの処理をFTPあたりに変換して別途ストレージサーバを立てそこに保管する
             $fileName['tmp_name'], 
@@ -77,17 +78,41 @@ class IllustPostsController extends AppController
     }
 
     function illustSftp(){
-	$count = new IllustsController();
         $user_id = $this->request->getData('user_id');
-        $urlGenerate = $user_id.'_'.$count->contentCounter($user_id).'_';
-	$fileName = $this->request->getData('file');
+        $urlGenerate = $user_id.'_'.$this->getAchievementNum($user_id).'_';
+	    $fileName = $this->request->getData('file');
         $local_img = TMP."img/".$urlGenerate.$fileName['name'];
         $remote_img = "illust_img/".$urlGenerate.$fileName['name'];
-	$sftp = new SFTP(SFTP_SERVER, 122);
-	$sftp->login(SFTP_USER, SFTP_PASSWORD);
+	    $sftp = new SFTP(SFTP_SERVER, 122);
+	    $sftp->login(SFTP_USER, SFTP_PASSWORD);
 	
-	$sftp->put($remote_img, $local_img, SFTP::SOURCE_LOCAL_FILE);
+        $sftp->put($remote_img, $local_img, SFTP::SOURCE_LOCAL_FILE);
     }
+
+    //コンテンツ数をカウントする
+    function illustAchieveUpdate($user_id)
+    {
+    $getAchieve = $this->Achievements->exists(['user_id' => $user_id]);
+        if($getAchieve){ //すでに投稿があるか判定
+            $post = $this->Achievements->find()
+                    ->where(['user_id' => $user_id])
+                    ->first();
+            $post->illust_num = $post->illust_num + 1;
+        } else{
+            $post = $this->Achievements->newEntity();
+            $post = $this->Achievements->patchEntity($post,['illust_num' => 1, 'series_num' => 0, 'story_num' => 0, "user_id" => $user_id]);
+        }
+        $this->Achievements->save($post);
+    }
+
+    function getAchievementNum($user_id){
+        $illusts_num = $this->Achievements->find()
+                    ->select(['illust_num'])
+                    ->where(['user_id' => $user_id])
+                    ->first();
+        return $illusts_num['illust_num'];
+    }
+
 
     function illustFtp(){
 	//TODO: SFTPに置き換えたため今後不要

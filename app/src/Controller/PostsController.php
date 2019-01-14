@@ -66,11 +66,13 @@ class PostsController extends AppController
     //投稿をセーブする関数
     public function seriesSave()
     {
-	$series = TableRegistry::getTableLocator()->get('series');
+    $series = TableRegistry::getTableLocator()->get('series');
+    $this->Achievements = TableRegistry::get('achievements');
 	$post = $series->newEntity();
         if($this->request->is('post')){
             $post = $series->patchEntity($post,$this->request->getData());
             $series->save($post);
+            $this->seriesAchieveUpdate($this->request->getData('user_id'));
             return $this->redirect('/Users/mypage');
         }
     }
@@ -79,10 +81,12 @@ class PostsController extends AppController
     public function storySave()
     {
         $stories = TableRegistry::getTableLocator()->get('stories');
+        $this->Achievements = TableRegistry::get('achievements');
         $post = $stories->newEntity();
         if($this->request->is('post')){
             $post = $stories->patchEntity($post,$this->request->getData());
             $stories->save($post);
+            $this->storyAchieveUpdate($this->request->getData('user_id'));
             return $this->redirect('/Users/mypage');
         }
     }
@@ -137,5 +141,34 @@ class PostsController extends AppController
         $this->set(compact('series_id'));
         $this->set(compact('story_id'));
         return;
+    }
+
+    function seriesAchieveUpdate($user_id)
+    {
+    $getAchieve = $this->Achievements->exists(['user_id' => $user_id]);
+        if($getAchieve){ //すでに投稿があるか判定
+            $post = $this->Achievements->find()
+                    ->where(['user_id' => $user_id])
+                    ->first();
+            $post->series_num = $post->series_num + 1;
+        } else{
+            $post = $this->Achievements->newEntity();
+            $post = $this->Achievements->patchEntity($post,['illust_num' => 0, 'series_num' => 1, 'story_num' => 0, "user_id" => $user_id]);
+        }
+        $this->Achievements->save($post);
+    }
+    function storyAchieveUpdate($user_id)
+    {
+    $getAchieve = $this->Achievements->exists(['user_id' => $user_id]);
+        if($getAchieve){ //すでに投稿があるか判定
+            $post = $this->Achievements->find()
+                    ->where(['user_id' => $user_id])
+                    ->first();
+            $post->story_num = $post->story_num + 1;
+        } else{
+            $post = $this->Achievements->newEntity();
+            $post = $this->Achievements->patchEntity($post,['illust_num' => 0, 'series_num' => 0, 'story_num' => 1, "user_id" => $user_id]);
+        }
+        $this->Achievements->save($post);
     }
 }
