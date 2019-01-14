@@ -71,7 +71,7 @@ class IllustPostsController extends AppController
         );
         
         //DB保存用のURL
-        $imgUrl = 'img/illust_img/'.$urlGenerate.$fileName['name'];
+        $imgUrl = 'illust_img/'.$urlGenerate.$fileName['name'];
         $this->request = $this->request->withData('illust_url', $imgUrl);
         return $this->request;
     }
