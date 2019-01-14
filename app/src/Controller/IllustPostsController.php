@@ -22,7 +22,7 @@ use Cake\Routing\Router;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use RuntimeException;
-require "vendor/autoload.php";
+require ROOT."/vendor/autoload.php";
 use phpseclib\Net\SFTP;
 
 class IllustPostsController extends AppController
