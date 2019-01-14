@@ -55,7 +55,7 @@ class ArticlesController extends AppController
 	->contain(['Users']);
 	$this->set(compact('illusts_posts'));
 
-	$test = Router::url('/', true); 
+	$test = 'http://www.c-oasis.jp:8084/'; 
 	$this->set(compact('test'));
 	}
 	
