@@ -42,6 +42,7 @@ class IllustsController extends AppController
 	$this->set(compact('posts'));
 	$this->set(compact('post_id'));
 	$this->set(compact('story'));
+	$this->set('test', 'http://www.c-oasis.jp:8084/');
 	}
 
 	public function contentCounter($user_id){

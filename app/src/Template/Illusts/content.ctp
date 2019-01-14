@@ -14,7 +14,7 @@ foreach($posts as $post):
 	echo h($post->user['username']);
 ?>
 </p>
-<div><?php echo "<img src=\"".$url.$post->illust_url."\">"; ?></div>
+<div><?php echo "<img src=\"".$test.$post->illust_url."\">"; ?></div>
 </li>
 <?php
 endforeach;
